@@ -1,17 +1,9 @@
-// Top-level build file.
-// NOTA: Questo file usa la sintassi moderna 'plugins {}'. Non usare 'buildscript {}'.
+// build.gradle (Progetto)
 
+// NON USARE 'buildscript {}'. Questo è il modo moderno e pulito.
+// Questo file è intenzionalmente quasi vuoto.
+// Le versioni dei plugin sono gestite in modo centralizzato in 'settings.gradle' o nei file specifici del modulo.
 plugins {
-    // Plugin per le applicazioni Android
     id 'com.android.application' version '8.2.2' apply false
-    // Plugin per il linguaggio Kotlin su Android
     id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
-    // Plugin per il processore di annotazioni di Kotlin (kapt)
-    id 'org.jetbrains.kotlin.plugin.compose' version '1.9.22' apply false
-    // Plugin per ObjectBox (deve essere qui per essere disponibile al modulo app)
-    id 'io.objectbox' version '4.0.0' apply false
 }
-
-// tasks.register('clean', Delete) { // Questo task è obsoleto, Gradle lo gestisce di default.
-//     delete rootProject.buildDir
-// }
