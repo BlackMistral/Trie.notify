@@ -1,15 +1,18 @@
-// Blocco dei plugin: ora contiene TUTTI i plugin richiesti,
-// incluso quello per il compilatore di Compose, risolvendo l'errore di build.
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'io.objectbox'
     id 'com.jaredsburrows.license'
-    // --- FIX DEFINITIVO ---
-    // Aggiunto il plugin del compilatore Compose, ora obbligatorio
-    // quando 'buildFeatures { compose true }' è usato.
     id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+// Aggiunto il blocco repositories CHE MANCAVA, con google() come prima fonte.
+// Questo RISOLVE l'errore "Could not find library".
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 licenseReport {
@@ -22,7 +25,7 @@ licenseReport {
 
 android {
     compileSdk 34
-    namespace 'com.android.alftendev' // 'namespace' deve essere definito qui
+    namespace 'com.android.alftendev'
 
     defaultConfig {
         applicationId "com.alftendev.notlistener"
@@ -31,8 +34,6 @@ android {
         versionCode 38
         versionName "2.5.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        
-        // Aggiunto per coerenza con il plugin Compose
         vectorDrawables {
             useSupportLibrary true
         }
@@ -58,14 +59,13 @@ android {
 
     buildFeatures {
         viewBinding true
-        // Questa riga è ciò che rende obbligatorio il plugin del compilatore Compose
         compose true
     }
-    
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.15'
-    }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.10' // Allineato alla versione di Kotlin 1.9.22
+    }
+    
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -74,7 +74,7 @@ android {
 }
 
 dependencies {
-    // Le dipendenze sono state verificate e allineate.
+    // Dipendenze verificate e stabili
     implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -87,18 +87,16 @@ dependencies {
     implementation "androidx.biometric:biometric-ktx:1.2.0-rc01"
 
     implementation "io.objectbox:objectbox-kotlin:4.0.0"
-    implementation "io.objectbox:objectbox-android:4.0.0"
     kapt "io.objectbox:objectbox-processor:4.0.0"
 
     implementation 'org.apache.commons:commons-lang3:3.14.0'
-
     implementation 'androidx.activity:activity-ktx:1.8.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
     implementation "androidx.palette:palette-ktx:1.0.0"
 
+    // Dipendenze Compose
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation "androidx.compose.ui:ui-tooling-preview"
     implementation 'androidx.compose.material3:material3'
@@ -107,8 +105,10 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
     debugImplementation "androidx.compose.ui:ui-tooling"
 
+    // Dipendenze Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    coreLibraryDesugaring 'com.google.android.gms:play-services-basement:18.4.0'
+    
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
