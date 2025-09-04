@@ -1,9 +1,10 @@
 // build.gradle (Progetto)
-
-// NON USARE 'buildscript {}'. Questo è il modo moderno e pulito.
-// Questo file è intenzionalmente quasi vuoto.
-// Le versioni dei plugin sono gestite in modo centralizzato in 'settings.gradle' o nei file specifici del modulo.
 plugins {
+    // Catalogo dei plugin disponibili per i moduli
     id 'com.android.application' version '8.2.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+    id 'org.jetbrains.kotlin.plugin.compose' version '1.9.22' apply false
+    id 'io.objectbox' version '4.0.0' apply false
+    id 'com.jaredsburrows.license' version '0.9.8' apply false
+    id 'kotlin-kapt' version '1.9.22' apply false
 }
