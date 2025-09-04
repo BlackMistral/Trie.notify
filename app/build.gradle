@@ -1,23 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    // <-- MODIFICA 1: Aggiunto esplicitamente il plugin 'kotlin-kapt'
-    // Questo garantisce che il processore di annotazioni sia configurato correttamente
-    // e ci dà un maggiore controllo.
     id 'kotlin-kapt'
 }
 
-// <-- MODIFICA 2: Spostato il plugin di ObjectBox qui
-// L'ordine di applicazione dei plugin a volte è importante.
 apply plugin: 'io.objectbox'
-
 apply plugin: "com.jaredsburrows.license"
-// Non è più necessario applicare 'kotlin.plugin.compose' qui se si usa il blocco composeOptions
-// apply plugin: "org.jetbrains.kotlin.plugin.compose"
 
-// <-- MODIFICA 3: Aggiunto il blocco di configurazione di ObjectBox
-// Questo aiuta a risolvere problemi in cui 'kapt' non trova le entità.
-// 'debug' false significa che non verranno loggate informazioni extra nelle build di produzione.
 objectbox {
     debug false
 }
@@ -32,15 +21,12 @@ licenseReport {
 }
 
 android {
-    // La versione del compileSdk 36 è molto recente, usiamo la 34 che è lo standard stabile attuale
-    // per massimizzare la compatibilità con le librerie.
     compileSdk 34
 
     defaultConfig {
         resourceConfigurations += ['en', 'it-rIT']
         applicationId "com.alftendev.notlistener"
         minSdk 24
-        // La targetSdk dovrebbe corrispondere alla compileSdk
         targetSdk 34
         versionCode 38
         versionName "2.5.6"
@@ -78,48 +64,45 @@ android {
 }
 
 dependencies {
-    // Ho aggiornato alcune librerie chiave alle loro versioni stabili più recenti
-    // per evitare potenziali bug causati da versioni alpha o datate.
     implementation 'androidx.preference:preference-ktx:1.2.1'
-    implementation 'androidx.core:core-ktx:1.12.0' // Aggiornato
-    implementation 'androidx.appcompat:appcompat:1.6.1' // Aggiornato a stabile
-    implementation 'com.google.android.material:material:1.11.0' // Aggiornato
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0' // Aggiornato a stabile
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    implementation "androidx.biometric:biometric-ktx:1.2.0-rc01" // Aggiornato a quasi stabile (Release Candidate)
+    implementation "androidx.biometric:biometric-ktx:1.2.0-rc01"
 
-    // <-- MODIFICA 4: Sostituito 'implementation' con 'kapt' per il processore di ObjectBox
-    // Questa è la modifica più importante. Il processore deve essere nella configurazione 'kapt'.
-    implementation "io.objectbox:objectbox-kotlin:4.0.0" // Usiamo la versione più recente e specifica per Kotlin
+    implementation "io.objectbox:objectbox-kotlin:4.0.0"
     implementation "io.objectbox:objectbox-android:4.0.0"
     kapt "io.objectbox:objectbox-processor:4.0.0"
 
-    implementation 'org.apache.commons:commons-lang3:3.14.0' // Aggiornato
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
 
     implementation 'com.jaredsburrows:gradle-license-plugin:0.9.8'
 
-    implementation 'androidx.activity:activity-ktx:1.8.2' // Aggiornato
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // Aggiornato a stabile
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
-    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0" // Aggiornato
+    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
     implementation "androidx.palette:palette-ktx:1.0.0"
 
-    // Dipendenze Compose aggiornate alle versioni stabili
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation 'androidx.compose.ui:ui:1.6.4'
     implementation 'androidx.compose.material:material:1.6.4'
     implementation 'androidx.compose.ui:ui-tooling-preview:1.6.4'
-    implementation "com.google.accompanist:accompanist-drawablepainter:0.34.0'
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0'
+    // --- INIZIO RIGA CORRETTA ---
+    implementation "com.google.accompanist:accompanist-drawablepainter:0.34.0"
+    // --- FINE RIGA CORRETTA ---
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
     implementation 'androidx.compose.material3:material3:1.2.1'
     debugImplementation 'androidx.compose.ui:ui-tooling:1.6.4'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5' // Aggiornato
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1' // Aggiornato
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4' // Aggiornato
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
