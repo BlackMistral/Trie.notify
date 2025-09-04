@@ -1,0 +1,55 @@
+# Nome del workflow, apparirà nella tab "Actions" del tuo repository GitHub.
+name: Android Build Check
+
+# Definisce quando questo workflow deve essere eseguito.
+on:
+  # Eseguilo ogni volta che fai un "push" (caricamento) sul branch 'main'.
+  # Se il tuo branch principale si chiama 'master', sostituisci 'main' con 'master'.
+  push:
+    branches: [ "main" ]
+  # Eseguilo anche quando viene creata una Pull Request verso il branch 'main'.
+  pull_request:
+    branches: [ "main" ]
+
+# Contiene la lista dei "lavori" (jobs) da eseguire.
+jobs:
+  # Nome del nostro job. Puoi chiamarlo come preferisci.
+  build:
+    # Specifica il tipo di macchina virtuale su cui eseguire il job. 'ubuntu-latest' è lo standard.
+    runs-on: ubuntu-latest
+
+    # Contiene la sequenza di passaggi (steps) da eseguire.
+    steps:
+      # Step 1: Scarica il codice del tuo repository sulla macchina virtuale.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Imposta l'ambiente di sviluppo Java (JDK). Android richiede una versione specifica.
+      # Usiamo JDK 17, che è lo standard attuale per le build Android moderne.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      # Step 3: (Best Practice) Configura una cache per le dipendenze di Gradle.
+      # Questo renderà le build successive molto più veloci, risparmiando tempo.
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Step 4: Rende eseguibile lo script di Gradle. È necessario su ambienti Linux/macOS.
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
+
+      # Step 5: Esegue il comando di build di Gradle.
+      # './gradlew build' compila il codice, esegue i test e assembla l'app.
+      # Se fallisce, l'intero workflow fallirà, avvisandoci di un problema.
+      - name: Build with Gradle
+        run: ./gradlew build
