@@ -234,7 +234,7 @@ object DBUtils {
     ): Notifications? {
         val packageName = getPackageName(pkgName) ?: return null
 
-        val notifications = Notifications(
+        val notification = Notifications(
             0,
             title,
             Date(date),
@@ -245,10 +245,14 @@ object DBUtils {
             peopleList,
             titleBig
         )
+        
+        // --- INSERIMENTO CHIRURGICO PER HASH CHAIN ---
+        HashChainManager.applyHashChain(notification)
+        // ---------------------------------------------
 
-        notifications.packageName.target = packageName
+        notification.packageName.target = packageName
 
-        return notifications
+        return notification
     }
 
     fun createNotificationFromJson(
@@ -277,6 +281,10 @@ object DBUtils {
             titleBig,
             isDeleted
         )
+        
+        // Anche se questa funzione non chiama createNotification, applichiamo l'hash anche qui
+        // per sicurezza, nel caso venga usata per importare dati non verificati.
+        HashChainManager.applyHashChain(notification)
 
         notification.packageName.target = packageName
 
@@ -310,6 +318,10 @@ object DBUtils {
             titleBig,
             true
         )
+        
+        // --- INSERIMENTO CHIRURGICO PER HASH CHAIN ---
+        HashChainManager.applyHashChain(notification)
+        // ---------------------------------------------
 
         notification.packageName.target = packageName
 
@@ -521,4 +533,19 @@ object DBUtils {
             .build()
             .remove()
     }
+    
+    // --- NUOVA FUNZIONE PER HASH CHAIN MANAGER ---
+    /**
+     * Recupera l'ultima notifica salvata nel database, basandosi sull'ID più alto.
+     * È la query più affidabile per ottenere l'ultimo elemento inserito.
+     * @return L'oggetto Notifications più recente, o null se il database è vuoto.
+     */
+    fun getAbsoluteLastNotification(): Notifications? {
+        return notifications
+            .query()
+            .orderDesc(Notifications_.entityId) // Ordina per ID decrescente
+            .build()
+            .findFirst() // Prende solo il primo risultato, che è il più recente
+    }
+    // -----------------------------------------
 }
