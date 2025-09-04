@@ -1,3 +1,5 @@
+// app/build.gradle (Modulo)
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -7,13 +9,8 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.compose'
 }
 
-// Aggiunto il blocco repositories CHE MANCAVA, con google() come prima fonte.
-// Questo RISOLVE l'errore "Could not find library".
-repositories {
-    google()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-}
+// Il blocco 'repositories' non è più necessario qui,
+// perché è gestito centralmente in 'settings.gradle'.
 
 licenseReport {
     generateCsvReport = false
@@ -63,7 +60,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.10' // Allineato alla versione di Kotlin 1.9.22
+        kotlinCompilerExtensionVersion '1.5.10'
     }
     
     packagingOptions {
@@ -74,7 +71,6 @@ android {
 }
 
 dependencies {
-    // Dipendenze verificate e stabili
     implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -96,7 +92,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
     implementation "androidx.palette:palette-ktx:1.0.0"
 
-    // Dipendenze Compose
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation "androidx.compose.ui:ui-tooling-preview"
     implementation 'androidx.compose.material3:material3'
@@ -105,7 +100,6 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
     debugImplementation "androidx.compose.ui:ui-tooling"
 
-    // Dipendenze Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
