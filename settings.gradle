@@ -1,18 +1,11 @@
 // settings.gradle
-
-// Il blocco 'pluginManagement' istruisce Gradle su dove trovare i plugin.
-// L'aggiunta di 'google()' e 'mavenCentral()' qui è fondamentale.
 pluginManagement {
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url 'https://jitpack.io' }
     }
 }
-
-// Il blocco 'dependencyResolutionManagement' istruisce Gradle su dove trovare le librerie (dipendenze).
-// Centralizzare questa configurazione qui è la best practice moderna.
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -21,6 +14,5 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-
 rootProject.name = "notlistener"
 include ':app'
