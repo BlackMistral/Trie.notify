@@ -1,5 +1,4 @@
 // app/build.gradle (Modulo)
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -8,9 +7,6 @@ plugins {
     id 'com.jaredsburrows.license'
     id 'org.jetbrains.kotlin.plugin.compose'
 }
-
-// Il blocco 'repositories' non è più necessario qui,
-// perché è gestito centralmente in 'settings.gradle'.
 
 licenseReport {
     generateCsvReport = false
@@ -62,7 +58,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.10'
     }
-    
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -77,21 +73,16 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
     implementation "androidx.biometric:biometric-ktx:1.2.0-rc01"
-
     implementation "io.objectbox:objectbox-kotlin:4.0.0"
     kapt "io.objectbox:objectbox-processor:4.0.0"
-
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'androidx.activity:activity-ktx:1.8.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
     implementation "androidx.palette:palette-ktx:1.0.0"
-
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation "androidx.compose.ui:ui-tooling-preview"
     implementation 'androidx.compose.material3:material3'
@@ -99,10 +90,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-drawablepainter:0.34.0"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
     debugImplementation "androidx.compose.ui:ui-tooling"
-
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
