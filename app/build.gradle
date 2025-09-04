@@ -1,15 +1,23 @@
+// --- INIZIO MODIFICA CHIAVE ---
+// Tutte le dichiarazioni dei plugin sono ora consolidate qui, nel modo moderno.
+// Questo risolve i problemi di ordine di esecuzione.
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'io.objectbox' // Plugin ObjectBox spostato qui
+    id 'com.jaredsburrows.license' // Plugin License spostato qui
 }
+// --- FINE MODIFICA CHIAVE ---
 
-apply plugin: 'io.objectbox'
-apply plugin: "com.jaredsburrows.license"
+// Non abbiamo più bisogno di 'apply plugin'
+// apply plugin: 'io.objectbox'
+// apply plugin: "com.jaredsburrows.license"
 
-objectbox {
-    debug false
-}
+// Blocco rimosso perché obsoleto e causava il fallimento #1
+// objectbox {
+//     debug false
+// }
 
 licenseReport {
     generateCsvReport = false
@@ -64,6 +72,7 @@ android {
 }
 
 dependencies {
+    // Le dipendenze rimangono le stesse della versione precedente, che erano già state aggiornate e corrette.
     implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -81,7 +90,9 @@ dependencies {
 
     implementation 'org.apache.commons:commons-lang3:3.14.0'
 
-    implementation 'com.jaredsburrows:gradle-license-plugin:0.9.8'
+    // La dipendenza del plugin di licenza non è più necessaria qui
+    // perché il plugin è già applicato correttamente nel blocco 'plugins'
+    // implementation 'com.jaredsburrows:gradle-license-plugin:0.9.8'
 
     implementation 'androidx.activity:activity-ktx:1.8.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -94,9 +105,7 @@ dependencies {
     implementation 'androidx.compose.ui:ui:1.6.4'
     implementation 'androidx.compose.material:material:1.6.4'
     implementation 'androidx.compose.ui:ui-tooling-preview:1.6.4'
-    // --- INIZIO RIGA CORRETTA ---
     implementation "com.google.accompanist:accompanist-drawablepainter:0.34.0"
-    // --- FINE RIGA CORRETTA ---
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
     implementation 'androidx.compose.material3:material3:1.2.1'
     debugImplementation 'androidx.compose.ui:ui-tooling:1.6.4'
