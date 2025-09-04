@@ -53,3 +53,4 @@ jobs:
       # Se fallisce, l'intero workflow fallirà, avvisandoci di un problema.
       - name: Build with Gradle
         run: ./gradlew build
+
