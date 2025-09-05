@@ -1,10 +1,10 @@
 // app/build.gradle (Modulo)
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'io.objectbox'
-    id 'com.jaredsburrows.license'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.objectbox)
+    alias(libs.plugins.license)
     id 'org.jetbrains.kotlin.plugin.compose'
 }
 
@@ -67,31 +67,31 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.preference:preference-ktx:1.2.1'
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation "androidx.biometric:biometric-ktx:1.2.0-rc01"
-    implementation "io.objectbox:objectbox-kotlin:4.0.0"
-    kapt "io.objectbox:objectbox-processor:4.0.0"
-    implementation 'org.apache.commons:commons-lang3:3.14.0'
-    implementation 'androidx.activity:activity-ktx:1.8.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'net.lingala.zip4j:zip4j:2.11.5'
-    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
-    implementation "androidx.palette:palette-ktx:1.0.0"
-    implementation 'androidx.activity:activity-compose:1.8.2'
-    implementation "androidx.compose.ui:ui-tooling-preview"
-    implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation "com.google.accompanist:accompanist-drawablepainter:0.34.0"
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
-    debugImplementation "androidx.compose.ui:ui-tooling"
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    implementation libs.preference.ktx
+    implementation libs.core.ktx
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.lifecycle.viewmodel.ktx
+    implementation libs.legacy.support.v4
+    implementation libs.mpandroidchart
+    implementation libs.biometric.ktx
+    implementation libs.objectbox.kotlin
+    ksp libs.objectbox.processor
+    implementation libs.commons.lang3
+    implementation libs.activity.ktx
+    implementation libs.constraintlayout
+    implementation libs.zip4j
+    implementation libs.kotlinx.datetime
+    implementation libs.palette.ktx
+    implementation libs.activity.compose
+    implementation platform(libs.compose.bom)
+    implementation libs.ui
+    implementation libs.ui.graphics
+    implementation libs.ui.tooling.preview
+    implementation libs.material3
+    debugImplementation libs.ui.tooling
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.espresso.core
+    coreLibraryDesugaring libs.desugar.jdk.libs
 }
